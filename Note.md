@@ -56,3 +56,25 @@
                 - Votes get stored in Decentralized storage like IPFS, when the voting window closes, count the vote,
                   send the result on-chain, mainly to save gas
                     - Alternatively, replay these side txns in a single txn
+
+## Project structure
+
+- "Box" contract
+    - A simple contract that has simple functions
+    - Ownable -> Owned by DAO
+    - Functions are only executable by DAO
+- DAO
+    - Voting, querying, executing
+
+### Implementation
+
+- Voting
+    - ERC20 Mechanism
+    - Create a base ERC20 token and then make it governance-compatible
+    - Fair?
+        - Scenario:
+            - A profitable proposal coming up, some entity buys a lot of token(votes), and dumps the votes afterwords, (
+              causing value drop?)
+                - How to solve?
+                    - Snapshot of block num of the tokens -> Use `ERC20Votes`
+                    - Checkpoints
