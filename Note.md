@@ -78,3 +78,25 @@
                 - How to solve?
                     - Snapshot of block num of the tokens -> Use `ERC20Votes`
                     - Checkpoints
+- `GovernanceContract`
+    - Contains the governance functions like voting
+- `TimeLock`
+    - The owner of the box contract
+        - Need to wait after proposal went through
+            - Give time for user to get out if they wish to exit the governance after a proposal
+    - [OpenZeppelin Wizard](https://docs.openzeppelin.com/contracts/5.x/wizard)
+        - Creates basic boilerplate
+            - The actual time logic will be in terms of block, but when creating here, for simplicity, it's using real
+              world time period
+            - Notations
+                - `Proposal threshold`
+                    - Min votes the proposer needs to hold to create a proposal
+                - `Quorum`
+                    - Determine whether a proposal passes, can be in percentage or num
+        - Generated code explained
+            - Need to go through the code for this part
+
+## Problems
+
+- [ ] OpenZeppelin has clearly updated, follow
+      new [docs](https://docs.openzeppelin.com/contracts/5.x/governance#erc20votes_erc20votescomp)
