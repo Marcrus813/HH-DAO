@@ -3,7 +3,7 @@ pragma solidity ^0.8.20;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract Council is Ownable {
+contract SmallCouncil is Ownable {
     bool private verdict;
 
     event VerdictStored(bool indexed oldVerdict, bool indexed newVerdict);
