@@ -100,7 +100,7 @@
     - Governor takes the proposal and take the proposal to `TimeLock` and enters vote pending state
     - `TimeLock` pends the proposal based on config, then execute to bring the proposal into voting state
     - User vote on the proposal
-    - Governor talis the votes and determines if the proposal passes based on quroum and majority
+    - Governor talis the votes and determines if the proposal passes based on quorum and majority
     - Governor tells TimeLock to enter queued state(can be invoked by any valid user)
     - `TimeLock` Pends queued state
     - Governor `execute()`(can be invoked by any valid user)
@@ -166,4 +166,69 @@
         contract "script" instance, ignition won't know what to do
 
 - [x] `loadFixture` in a more complex project like this one
-    - `loadFixture` can work with both function returning ignition modules and regular contract instances
+    - Can still use `deploy.js`'s `Aggregated`, just in `deploy.js` remember to add, or you will run into a nonce
+      conflict
+        ```js
+        if (require.main === module) {
+            main()
+                .then(() => process.exit(0))
+                .catch((error) => {
+                    console.error(error);
+                    process.exit(1);
+                });
+        }
+        ```
+        so that it `main` does not run when using `AggregatedDeploy` from other places, used to be familiar with this
+        usage back with hardhat deploy, but it became rare after transition to ignition, now's my reminder
+- [x] Vote interpretation
+    - There are three in most cases: Against, for, and Abstain(`VOTE_TYPE_FRACTIONAL` from `GovernorCountingFractional`
+      in addition to `GovernorCountingSimple`), and from `GovernorCountingSimple`:
+        ```solidity
+        enum VoteType {
+            Against,
+            For,
+            Abstain
+        }
+        ```
+        hence `uint` values are: against: 0, for: 1, abstain: 2
+- [x] Event argument access: `args.values` vs `args[3]`
+    - `args.values[0]` returns undefined, but `args[3][0]` works fine for the same event parameter
+        - `values` is a reserved method on JavaScript arrays (`Array.prototype.values`). When ethers.js adds named
+          properties to event args array, it doesn't override existing methods
+        - Solution
+            - Use positional indexing `args[3]` instead of named access `args.values` for the "values" parameter in
+              events
+- [x] Vote token initializing
+    - Should be initialized like any other ERC20 token
+- [x] Quorum calculation
+    - Traditionally based on participated votes against TOTAL SUPPLY, `Fraction` version of OpenZeppelin has different
+      optional strategy
+    - One "vote" might be confusing, it does not mean that one token is cast as vote, it means the voter casts all its
+      voting power to this vote: having 1 token as vote -> 1 vote, having 10 token as vote -> 10 votes in this one
+      action
+
+## Wrap note
+
+- Working on this project I felt the need to do a little summary on what's kept me confused, cuz it includes not only
+  the technical details but
+  also the general design, the flow, the lifecycles
+
+### Design
+
+- The full lifecycle of a proposal from creation to execution
+    - Components involved
+    - Actors involved
+    - Ownership and permission between the component contracts
+    - And how does the above affect implementation and deployment
+- The importance of delaying
+    - For the community to review the proposal, to vote, to react to its result
+- The snapshot design
+    - Token & Voting power(delegate)
+
+### Technical
+
+- Some configurations are needed to be done by deployer as a temporary admin, after wards, it should be transferred /
+  renounced
+    - OpenZeppelin suggested that(comment in its src), it could be done with submitting proposal to renounce deployer's
+      admin role, but I did it right after I am done, cuz I think this approach is temp by intention and should not be
+      brought on-chain at all

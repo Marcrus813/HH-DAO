@@ -8,8 +8,11 @@ import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Permit.sol";
 contract SmallCouncilToken is ERC20, ERC20Permit, ERC20Votes {
     constructor(
         string memory tokenName,
-        string memory tokenSymbol
-    ) ERC20(tokenName, tokenSymbol) ERC20Permit(tokenName) {}
+        string memory tokenSymbol,
+        uint256 initialSupply
+    ) ERC20(tokenName, tokenSymbol) ERC20Permit(tokenName) {
+        _mint(_msgSender(), initialSupply);
+    }
 
     function _update(
         address from,

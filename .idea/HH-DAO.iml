@@ -6,11 +6,11 @@
       <excludeFolder url="file://$MODULE_DIR$/temp" />
       <excludeFolder url="file://$MODULE_DIR$/tmp" />
       <excludeFolder url="file://$MODULE_DIR$/.claude" />
-      <excludeFolder url="file://$MODULE_DIR$/ClaudeExamples" />
       <excludeFolder url="file://$MODULE_DIR$/artifacts" />
       <excludeFolder url="file://$MODULE_DIR$/cache" />
       <excludeFolder url="file://$MODULE_DIR$/ignition/deployments/chain-31337" />
       <excludeFolder url="file://$MODULE_DIR$/typechain" />
+      <excludeFolder url="file://$MODULE_DIR$/ClaudeGenerated/ClaudeExamples" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

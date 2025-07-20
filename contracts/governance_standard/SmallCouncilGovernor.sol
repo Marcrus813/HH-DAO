@@ -12,11 +12,11 @@ import {IVotes} from "@openzeppelin/contracts/governance/utils/IVotes.sol";
 import {TimelockController} from "@openzeppelin/contracts/governance/TimelockController.sol";
 
 contract SmallCouncilGovernor is Governor, GovernorSettings, GovernorCountingSimple, GovernorVotes, GovernorVotesQuorumFraction, GovernorTimelockControl {
-    constructor(IVotes _token, TimelockController _timelock, uint48 _votingDelay, uint32 _votingPeriod, uint256 _quroumPercentage)
+    constructor(IVotes _token, TimelockController _timelock, uint48 _votingDelay, uint32 _votingPeriod, uint256 _quorumPercentage)
     Governor("SmallCouncilGovernor")
     GovernorSettings(_votingDelay /* 1 day */, _votingPeriod /* 1 week */, 0)
     GovernorVotes(_token)
-    GovernorVotesQuorumFraction(_quroumPercentage)
+    GovernorVotesQuorumFraction(_quorumPercentage)
     GovernorTimelockControl(_timelock)
     {}
 
