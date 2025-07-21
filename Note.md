@@ -232,3 +232,10 @@
     - OpenZeppelin suggested that(comment in its src), it could be done with submitting proposal to renounce deployer's
       admin role, but I did it right after I am done, cuz I think this approach is temp by intention and should not be
       brought on-chain at all
+
+## Follow up
+
+- `castVoteBySig`(signature)
+    - Anyone can execute this vote on behalf of ME, if I didn't send the txn
+    - It allows a project to subsidize voting fees
+        - Voter -> Generate signature for free, and give it to said project to cast vote, gas paid by the project
